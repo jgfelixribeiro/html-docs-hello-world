@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Moni - Cadastro de conjuntos de ocorrências</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="navbar-wrapper">
+      <div class="container">
+          <h1>Conjuntos de ocorrências</h1>
+          <hr/>
+      </div>
+    </div>
+
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+
+    <div class="container">
+        
+	  <div class="row">
+		<div class="col-xs-12 col-sm-12">
+		  <div class="form-group">
+			<label for="id">Código</label>
+			<input type="number" class="form-control" id="id" placeholder="Digite o código">
+			
+		  </div>
+		  <div class="form-group">
+			<label for="description">Descrição</label>
+			<input type="text" class="form-control" id="description" placeholder="Digite a descrição">
+		  </div>
+  	    </div>
+	  </div>	  
+	  
+	  <div class="row">
+		<div class="col-xs-10 col-sm-11 text-right">
+		  <button type="button" class="btn btn-primary" onclick="save()">Salvar</button>
+		</div>
+		<div class="col-xs-2 col-sm-1 text-right">
+		  <button type="button" class="btn btn-danger" onclick="goBack()">Voltar</button>
+		</div>
+	  </div>	  
+	  
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="js/bootstrap.min.js"></script>
+	<script>
+	  var queryString = window.location.search;
+	  var urlParams = new URLSearchParams(queryString);
+	  if (urlParams.get('id') == null) {
+	  } else {
+	    $.get( "https://moniapi.azurewebsites.net/api/eventsets/" + urlParams.get('id'), function( data ) {
+		  if (data != null) {
+			$( "#id" ).val(data.id);
+			$( "#description" ).val(data.description);
+		  }
+		  console.log( data );		  		  
+		  $( "#id" ).prop( "disabled", true );
+	    });
+	  }	  
+	  
+	  function goBack() {
+		window.location.href = "index.html";
+	  }
+	  
+	  function save() {
+		if (urlParams.get('id') == null) {
+		  $.ajax({
+			url:"https://moniapi.azurewebsites.net/api/eventsets",
+			type:"POST",
+			data: JSON.stringify({ "id": parseInt($("#id").val()), "description": $("#description").val() }),
+			contentType:"application/json; charset=utf-8",
+			dataType:"json",
+			success: function(){ 
+			  alert("Registro adicionado com sucesso");
+			  goBack();
+			}
+		  });		  
+		} else {
+		  $.ajax({
+			url:"https://moniapi.azurewebsites.net/api/eventsets/" + urlParams.get('id'),
+			type:"PUT",
+			data: JSON.stringify({ "id": parseInt($("#id").val()), "description": $("#description").val() }),
+			contentType:"application/json; charset=utf-8",
+			dataType:"json",
+			success: function(){ 
+			  alert("Registro atualizado com sucesso");
+			  goBack();
+			}
+		  });		  
+		}
+	  }
+	</script>
+  </body>
+</html>
