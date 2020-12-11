@@ -56,14 +56,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="js/bootstrap.min.js"></script>
-	<script>
+	<script crossorigin>
 	  $.ajax({
 			url:"https://moniapi.azurewebsites.net/api/login",
 			type:"POST",
 			data: JSON.stringify({ "username": "robin", "password": "robin" }),
 			contentType:"application/json; charset=utf-8",
 			dataType:"json",
-			//xhrFields: { withCredentials:true },
+			crossDomain: true,
+			xhrFields: { withCredentials:true },
 			success: function(){ 			  
 			}
 		  });		  
@@ -87,6 +88,8 @@
 		  type:"GET",				
 		  contentType:"application/json; charset=utf-8",
 		  dataType:"json",
+		  crossDomain: true,
+		  //xhrFields: { withCredentials:true },
 		  /*crossDomain: true,
 		  beforeSend: function(xhr){
 		    xhr.withCredentials = true;
