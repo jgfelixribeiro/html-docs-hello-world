@@ -55,7 +55,39 @@
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="js/bootstrap.min.js"></script>
 	<script>
-	  $.get( "https://moniapi.azurewebsites.net/api/eventsets", function( data ) {
+	  $.ajax({
+			url:"https://moniapi.azurewebsites.net/api/login",
+			type:"POST",
+			data: JSON.stringify({ "username": "robin", "password": "robin" }),
+			contentType:"application/json; charset=utf-8",
+			dataType:"json",
+			//xhrFields: { withCredentials:true },
+			success: function(){ 
+			  /*$.ajax({
+				url:"https://moniapi.azurewebsites.net/api/eventsets",
+				type:"GET",				
+				contentType:"application/json; charset=utf-8",
+				dataType:"json",
+				/*crossDomain: true,
+				beforeSend: function(xhr){
+                  xhr.withCredentials = true;
+				},
+				//xhrFields: { withCredentials:true },
+				success: function(data){ 
+					console.log( data );
+					$(".table tbody tr").remove();
+					if (data != null && data.length>0) {
+					  for (var x = 0; x < data.length; x++) {
+						$(".table tbody").append("<tr></tr>");		  
+						$(".table tbody tr").last().append("<td>" + data[x].id + "</td><td>" + data[x].description + "</td><td class='text-right'><button type='button' class='btn btn-warning' onclick='goEdit(" + data[x].id + ")'>Editar</button>&nbsp;<button type='button' class='btn btn-danger' onclick='goDelete(" + data[x].id + ")'>Excluir</button></td>");
+					  }
+					}
+				}
+			  });*/
+			}
+		  });		  
+	  
+	  /*$.get( "https://moniapi.azurewebsites.net/api/eventsets", function( data ) {
 		console.log( data );
 		$(".table tbody tr").remove();
 		if (data != null && data.length>0) {
@@ -64,7 +96,7 @@
 		    $(".table tbody tr").last().append("<td>" + data[x].id + "</td><td>" + data[x].description + "</td><td class='text-right'><button type='button' class='btn btn-warning' onclick='goEdit(" + data[x].id + ")'>Editar</button>&nbsp;<button type='button' class='btn btn-danger' onclick='goDelete(" + data[x].id + ")'>Excluir</button></td>");
 		  }
 		}
-	  });
+	  });*/
 	  
 	  function goAdd() {
 		window.location.href = "cad.html";
