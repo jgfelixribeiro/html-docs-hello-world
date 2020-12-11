@@ -27,6 +27,8 @@
         
       <div class="row">
 		<div class="col-xs-12 col-sm-12 text-right">
+		  <button type="button" class="btn btn-info" onclick="getEvents()">Listar dados</button>
+		  &nbsp;&nbsp;
 		  <button type="button" class="btn btn-success" onclick="goAdd()">Adicionar</button>
 		</div>
 	  </div>
@@ -62,30 +64,11 @@
 			contentType:"application/json; charset=utf-8",
 			dataType:"json",
 			//xhrFields: { withCredentials:true },
-			success: function(){ 
-			  /*$.ajax({
-				url:"https://moniapi.azurewebsites.net/api/eventsets",
-				type:"GET",				
-				contentType:"application/json; charset=utf-8",
-				dataType:"json",
-				/*crossDomain: true,
-				beforeSend: function(xhr){
-                  xhr.withCredentials = true;
-				},
-				//xhrFields: { withCredentials:true },
-				success: function(data){ 
-					console.log( data );
-					$(".table tbody tr").remove();
-					if (data != null && data.length>0) {
-					  for (var x = 0; x < data.length; x++) {
-						$(".table tbody").append("<tr></tr>");		  
-						$(".table tbody tr").last().append("<td>" + data[x].id + "</td><td>" + data[x].description + "</td><td class='text-right'><button type='button' class='btn btn-warning' onclick='goEdit(" + data[x].id + ")'>Editar</button>&nbsp;<button type='button' class='btn btn-danger' onclick='goDelete(" + data[x].id + ")'>Excluir</button></td>");
-					  }
-					}
-				}
-			  });*/
+			success: function(){ 			  
 			}
 		  });		  
+		  
+		  
 	  
 	  /*$.get( "https://moniapi.azurewebsites.net/api/eventsets", function( data ) {
 		console.log( data );
@@ -97,6 +80,30 @@
 		  }
 		}
 	  });*/
+	  
+	  function getEvents() {
+		$.ajax({
+		  url:"https://moniapi.azurewebsites.net/api/eventsets",
+		  type:"GET",				
+		  contentType:"application/json; charset=utf-8",
+		  dataType:"json",
+		  /*crossDomain: true,
+		  beforeSend: function(xhr){
+		    xhr.withCredentials = true;
+		  },*/
+		  //xhrFields: { withCredentials:true },
+		  success: function(data){ 
+			console.log( data );
+			$(".table tbody tr").remove();
+			if (data != null && data.length>0) {
+			  for (var x = 0; x < data.length; x++) {
+				$(".table tbody").append("<tr></tr>");		  
+				$(".table tbody tr").last().append("<td>" + data[x].id + "</td><td>" + data[x].description + "</td><td class='text-right'><button type='button' class='btn btn-warning' onclick='goEdit(" + data[x].id + ")'>Editar</button>&nbsp;<button type='button' class='btn btn-danger' onclick='goDelete(" + data[x].id + ")'>Excluir</button></td>");
+			  }
+			}
+		  }
+		});
+	  }
 	  
 	  function goAdd() {
 		window.location.href = "cad.html";
